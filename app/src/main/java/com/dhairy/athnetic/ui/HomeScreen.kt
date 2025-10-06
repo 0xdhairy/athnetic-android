@@ -1,41 +1,38 @@
 package com.dhairy.athnetic.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import io.github.jan.supabase.auth.user.UserInfo
-import kotlinx.coroutines.launch
+import io.github.jan.supabase.realtime.Column
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonObject
 
 
 @Composable
-fun HomeScreen(userInfo: UserInfo? ,onLogout: () -> Unit) {
-    val scope = rememberCoroutineScope()
-    println("User Info: ${userInfo?.userMetadata?.get("picture")}")
+fun HomeScreen() {
+    // just placeholder
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        contentAlignment = Alignment.TopStart,
+        modifier = Modifier.fillMaxSize().padding(20.dp).padding(top = 100.dp)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Welcome, ${userInfo?.userMetadata?.get("name").toString().replace("\"" , "")}", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
-            AsyncImage(
-                model = userInfo?.userMetadata?.get("picture")?.toString()?.replace("\"", ""),
-                contentDescription = "User Avatar",
-                modifier = Modifier
-                    .size(120.dp)
-                    .padding(16.dp)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = {
-                scope.launch { onLogout() }
-            }) {
-                Text("Logout")
-            }
+        Column(
+            verticalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            Text("Athnetic", style = MaterialTheme.typography.headlineMedium, fontSize = 50.sp, modifier = Modifier.padding(bottom=20.dp))
+            Text("Will add later - check out Feedback Section", style = MaterialTheme.typography.bodyMedium, fontSize = 20.sp)
         }
+
     }
 }
-
