@@ -23,18 +23,21 @@ import com.dhairy.athnetic.Destination
  * The navigation bar displays items for each destination defined in the Destination enum.
  */
 @Composable
-fun NavigationBar(modifier: Modifier = Modifier, AppNavHost: @Composable (NavHostController, Destination, Modifier) -> Unit) {
+fun NavigationBar(
+    modifier: Modifier = Modifier,
+    appNavHost: @Composable (NavHostController, Destination, Modifier) -> Unit
+) {
     val navController = rememberNavController()
     val startDestination = Destination.HOME
-    val selectedDestination = rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+    val selectedDestination = rememberSaveable { mutableIntStateOf(0) }
 
     Scaffold(
         modifier = modifier, bottomBar = {
             NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
                 Destination.entries.forEachIndexed { index, destination ->
-                    NavigationBarItem(selected = selectedDestination.value == index, onClick = {
+                    NavigationBarItem(selected = selectedDestination.intValue == index, onClick = {
                         navController.navigate(route = destination.route)
-                        selectedDestination.value = index
+                        selectedDestination.intValue = index
                     }, icon = {
                         Icon(
                             imageVector = ImageVector.vectorResource(id = destination.icon),
@@ -44,7 +47,7 @@ fun NavigationBar(modifier: Modifier = Modifier, AppNavHost: @Composable (NavHos
                 }
             }
         }) { contentPadding ->
-        AppNavHost(navController, startDestination, Modifier.padding(contentPadding))
+        appNavHost(navController, startDestination, Modifier.padding(contentPadding))
     }
 }
 

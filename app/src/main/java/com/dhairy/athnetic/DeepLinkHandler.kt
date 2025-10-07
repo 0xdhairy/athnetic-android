@@ -43,8 +43,6 @@ suspend fun handleDeepLink(intent: Intent?, context: Context) {
 
         Supabase.client.auth.importSession(session)
         SessionManager.saveSession(context, session)
-        val userInfo =
-            Supabase.client.auth.retrieveUserForCurrentSession(updateSession = true).userMetadata
         println("Session set manually: ${Supabase.client.auth.currentSessionOrNull()}")
     }
 }

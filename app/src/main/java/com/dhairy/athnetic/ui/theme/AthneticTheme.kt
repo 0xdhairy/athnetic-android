@@ -18,7 +18,7 @@ val darkColorScheme = darkColorScheme(
 
 @Composable
 fun AthneticTheme(
-    darkTheme: Boolean = false,
+    darkTheme: Boolean = false, // Force light theme for dev
     content: @Composable () -> Unit
 ) {
     val myColorScheme = if (darkTheme) darkColorScheme else lightColorScheme

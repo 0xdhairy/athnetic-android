@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
             val current = Supabase.client.auth.currentSessionOrNull()
             if (current?.refreshToken != null) {
                 val refreshed = withTimeoutOrNull(15000) { // 15 s
-                    Supabase.client.auth.refreshSession(current.refreshToken!!)
+                    Supabase.client.auth.refreshSession(current.refreshToken)
                 }
                 if (refreshed != null) {
                     SessionManager.saveSession(this@MainActivity, refreshed)
@@ -109,33 +109,26 @@ class MainActivity : ComponentActivity() {
                             }
                         }
 
-                        Destination.FEEDBACK -> FeedbackScreen()
+                        Destination.FEEDBACK -> FeedbackScreen(this@MainActivity)
                     }
                 }
             }
         }
     }
 
-
     /**
      * Update the UI based on the current authentication state.
      * If a valid session exists, show the main app navigation or else show the login screen.
      */
-    private suspend fun updateUI() {
+    private fun updateUI() {
         val session = Supabase.client.auth.currentSessionOrNull()
-
         println("Current session: $session , From updateUI()")
-        val userInfo = if (session != null) {
-            Supabase.client.auth.retrieveUserForCurrentSession(updateSession = true)
-        } else null
         setContent {
             AthneticTheme {
                 if (session != null) {
-                    NavigationBar(AppNavHost = { navController, startDestination, modifier ->
+                    NavigationBar(appNavHost = { navController, startDestination, modifier ->
                         AppNavHost(
-                            navController,
-                            startDestination,
-                            modifier = modifier
+                            navController, startDestination, modifier = modifier
                         )
                     })
 

@@ -1,6 +1,5 @@
 package com.dhairy.athnetic.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,7 +38,7 @@ fun ProfileScreen(userInfo: UserInfo?, onLogout: suspend () -> Unit) {
         contentAlignment = Alignment.TopStart,
         modifier = Modifier.fillMaxSize().padding(15.dp).padding(top= 150.dp)
     ) {
-        Column() {
+        Column {
 
             Text(
                 "Welcome, ${userInfo?.userMetadata?.get("name").toString().replace("\"", "")}",
@@ -56,7 +55,7 @@ fun ProfileScreen(userInfo: UserInfo?, onLogout: suspend () -> Unit) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            var openDialog = remember { mutableStateOf(false) }
+            val openDialog = remember { mutableStateOf(false) }
             if (openDialog.value) {
                 AlertDialog(
                     onDismissRequest = {
